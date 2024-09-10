@@ -32,7 +32,7 @@ Start the service:
 
 Get the segments from a PDF:
 
-    curl -X POST -F 'file=@/PATH/TO/PDF/pdf_name.pdf' localhost:5060
+    curl -X POST -F 'file=@/PATH/TO/PDF/pdf_name.pdf' localhost:80
 
 To stop the server:
 
@@ -98,7 +98,7 @@ For more information about the data, you can visit the link we shared above.
 
 As we mentioned at the [Quick Start](#quick-start), you can use the service simply like this:
 
-    curl -X POST -F 'file=@/PATH/TO/PDF/pdf_name.pdf' localhost:5060
+    curl -X POST -F 'file=@/PATH/TO/PDF/pdf_name.pdf' localhost:80
 
 This command will run the visual model. So you should be prepared that it will use lots of resources. Also, please note 
 that if you do not have GPU in your system, or if you do not have enough free GPU memory, the visual model will run on CPU. 
@@ -107,7 +107,7 @@ You should be expecting a long response time in that case (See [speed benchmark]
 
 If you want to use the non-visual models, which are the LightGBM models, you can use this command:
 
-    curl -X POST -F 'file=@/PATH/TO/PDF/pdf_name.pdf' -F "fast=true" localhost:5060
+    curl -X POST -F 'file=@/PATH/TO/PDF/pdf_name.pdf' -F "fast=true" localhost:80
 
 The shape of the response will be the same in both of these commands. 
 
@@ -129,11 +129,11 @@ When the process is done, the output will include a list of SegmentBox elements 
 
 If you want to get the visualizations, you can use this command:
 
-    curl -X POST -F 'file=@/PATH/TO/PDF/pdf_name.pdf' localhost:5060/visualize -o '/PATH/TO/OUTPUT_PDF/pdf_name.pdf'
+    curl -X POST -F 'file=@/PATH/TO/PDF/pdf_name.pdf' localhost:80/visualize -o '/PATH/TO/OUTPUT_PDF/pdf_name.pdf'
 
 Or with fast models:
 
-    curl -X POST -F 'file=@/PATH/TO/PDF/pdf_name.pdf' -F "fast=true" localhost:5060/visualize -o '/PATH/TO/OUTPUT_PDF/pdf_name.pdf'
+    curl -X POST -F 'file=@/PATH/TO/PDF/pdf_name.pdf' -F "fast=true" localhost:80/visualize -o '/PATH/TO/OUTPUT_PDF/pdf_name.pdf'
 
 
 

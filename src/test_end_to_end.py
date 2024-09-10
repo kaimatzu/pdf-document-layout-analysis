@@ -4,7 +4,7 @@ from configuration import ROOT_PATH
 
 
 class TestEndToEnd(TestCase):
-    service_url = "http://localhost:5060"
+    service_url = "http://localhost:80"
 
     def test_error_file(self):
         with open(f"{ROOT_PATH}/test_pdfs/error.pdf", "rb") as stream:
