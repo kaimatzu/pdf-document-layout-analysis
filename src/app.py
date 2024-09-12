@@ -12,6 +12,7 @@ from pdf_layout_analysis.run_pdf_layout_analysis_fast import analyze_pdf_fast
 from text_extraction.get_text_extraction import get_text_extraction
 from toc.get_toc import get_toc
 from visualization.get_visualization import get_visualization
+from splade_embeddings.generate_embeddings import generate_splade_embeddings 
 
 service_logger.info(f"Is PyTorch using GPU: {torch.cuda.is_available()}")
 
@@ -83,3 +84,9 @@ async def get_text_endpoint(file: UploadFile = File(...), fast: bool = Form(Fals
 @catch_exceptions
 async def get_visualization_endpoint(file: UploadFile = File(...), fast: bool = Form(False)):
     return await run_in_threadpool(get_visualization, file, fast)
+
+@app.post("/generate_sparse_embeddings")
+@catch_exceptions
+async def generate_sparse_embeddings_route(text: str = Form(...)):
+    sparse_embeddings = await run_in_threadpool(generate_splade_embeddings, text)
+    return sparse_embeddings
