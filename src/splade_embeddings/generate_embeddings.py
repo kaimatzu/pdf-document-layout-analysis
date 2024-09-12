@@ -26,12 +26,11 @@ def generate_splade_embeddings(text):
     indices = sparse_values.nonzero()  # This returns a tuple of arrays
     values = sparse_values[indices]
 
-    # Convert indices tuple to a list of lists
-    indices_list = list(zip(*indices))
-    indices_list = [list(ind) for ind in indices_list]  # Each index pair is retained [token_position, vocab_index]
-
-    # Convert values to native Python floats
-    values_list = values.astype(float).tolist()
+    # Convert indices tuple to a list of lists and values to Python native types
+    indices_list = [list(ind) for ind in zip(*indices)]  # Each index pair is retained [token_position, vocab_index]
+    
+    # Convert numpy values to Python floats
+    values_list = [float(v) for v in values]
 
     # Prepare the sparse representation as a dictionary
     sparse_representation = {
