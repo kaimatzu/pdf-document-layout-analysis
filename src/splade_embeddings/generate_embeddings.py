@@ -18,7 +18,7 @@ def generate_splade_embeddings(text):
     with torch.no_grad():
         outputs = model(**inputs)
 
-    # Get the logits and apply a sparsity-inducing function (ReLU)
+    # Get the logits and apply a sparsity-inducing function (ReLU, etc.)
     logits = outputs.logits[0]
     sparse_values = torch.nn.functional.relu(logits).cpu().numpy()
 
@@ -26,15 +26,16 @@ def generate_splade_embeddings(text):
     indices = sparse_values.nonzero()  # This returns a tuple of arrays
     values = sparse_values[indices]
 
-    # Convert indices tuple to a list of lists and values to Python native types
-    indices_list = [list(ind) for ind in zip(*indices)]  # Each index pair is retained [token_position, vocab_index]
-    
-    # Convert numpy values to Python floats
-    values_list = [float(v) for v in values]
+    # Convert indices tuple to a list of lists, ensuring all values are native Python int
+    indices_list = list(zip(*indices))
+    indices_list = [list(map(int, ind)) for ind in indices_list]  # Convert all indices to native Python ints
+
+    # Convert values to native Python floats
+    values_list = values.astype(float).tolist()
 
     # Prepare the sparse representation as a dictionary
     sparse_representation = {
-        "indices": indices_list,  # List of [token_position, vocab_index]
+        "indices": indices_list,  # List of indices
         "values": values_list      # Corresponding values
     }
 
